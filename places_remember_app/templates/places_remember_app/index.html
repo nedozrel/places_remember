@@ -9,6 +9,7 @@
     {% if request.user.is_authenticated %}
         {#  YMaps do not work without referer header  #}
         <meta name="referrer" content="origin"/>
+        {#  TODO: move api key to .env  #}
         <script src="https://api-maps.yandex.ru/3.0/?apikey=4ea56e6e-4561-4712-9f69-ece12b9cdd85&lang=ru_RU"></script>
         <script src="{% static 'places_remember_app/js/script.js' %}"></script>
     {% endif %}
@@ -34,10 +35,10 @@
             <input name="longitude" type="hidden" class="longitude-input add-place-form__input">
             <input name="latitude" type="hidden" class="latitude-input add-place-form__input">
             <label for="place-title">Название</label>
-            <input name="place-title" id="place-title" type="text" class="place-title-input add-place-form__input">
-            <label for="place-comment">Комментарий</label>
-            <textarea name="place-comment" id="place-comment"
-                      class="place-comment-input add-place-form__input"></textarea>
+            <input name="title" id="place-title" type="text" class="place-title-input add-place-form__input">
+            <label for="place-description">Комментарий</label>
+            <textarea name="description" id="place-description"
+                      class="place-description-input add-place-form__input"></textarea>
             <input type="submit">
         </form>
         <div id="map" style="width: 600px; height: 400px"></div>
