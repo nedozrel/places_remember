@@ -25,19 +25,20 @@
   <div class="add-place-popup">
     <form action="{% url 'places' %}" method="post" class="add-place-form">
       {% csrf_token %}
-      <input name="longitude" type="hidden" class="longitude-input add-place-form__input">
-      <input name="latitude" type="hidden" class="latitude-input add-place-form__input">
-      <label for="place-title">Название</label>
-      <input name="title" id="place-title" type="text" class="place-title-input add-place-form__input">
-      <label for="place-description">Комментарий</label>
-      <textarea name="description" id="place-description"
-                class="place-description-input add-place-form__input"></textarea>
+      {% for field in form %}
+        <div class="form-field add-place-form__item">
+          <div class="form-field__error">
+            {{ field.errors }}
+          </div>
+          <div class="form-field__input">{{ field }}</div>
+        </div>
+      {% endfor %}
       <input type="submit">
     </form>
   </div>
   <div id="map" style="width: 600px; height: 400px"></div>
   <div class="places">
-    {% for place in place_list %}
+    {% for place in places %}
       <div class="place places__item">
         <a href="{% url 'places_detail' place.id %}">
           <div class="place__title">
