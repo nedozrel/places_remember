@@ -4,6 +4,9 @@ from django.contrib.auth.models import User
 
 
 class BaseModel(models.Model):
+    """
+    Base model providing timestamp fields for created and updated times.
+    """
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -12,6 +15,10 @@ class BaseModel(models.Model):
 
 
 class Place(BaseModel):
+    """
+    Model representing a place with a title, description,
+    geographic coordinates, and associated user.
+    """
     title = models.CharField(max_length=200)
     description = models.TextField(blank=True)
     longitude = models.DecimalField(max_digits=20, decimal_places=15)

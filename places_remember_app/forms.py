@@ -4,6 +4,9 @@ from places_remember_app.models import Place
 
 
 class PlaceForm(forms.ModelForm):
+    """
+    A form for creating or updating a Place object.
+    """
     longitude = forms.DecimalField(
         widget=forms.TextInput(attrs={
             'type': 'hidden',

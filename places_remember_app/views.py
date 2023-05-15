@@ -9,6 +9,10 @@ from places_remember_app.models import Place
 
 
 def index(request):
+    """
+    Render the index page if the user is not authenticated,
+    or redirect to the places view if they are.
+    """
     if request.user.is_authenticated:
         return redirect('places')
 
@@ -16,8 +20,12 @@ def index(request):
 
 
 class PlacesView(LoginRequiredMixin, View):
+    """
+    View to display a list of places associated with the current user.
+    """
     @staticmethod
     def get_context(request):
+        """ Creates a dictionary of context variables for rendering the place list template. """
         return {
             'places': Place.objects.filter(user=request.user),
             'form': PlaceForm(request.POST) if request.POST else PlaceForm()
@@ -31,7 +39,6 @@ class PlacesView(LoginRequiredMixin, View):
         if context['form'].is_valid():
             place = context['form'].save(commit=False)
             place.user = request.user
-            print(len(place.title))
             place.save()
             return redirect('places')
 
@@ -39,6 +46,9 @@ class PlacesView(LoginRequiredMixin, View):
 
 
 class PlaceDetailView(LoginRequiredMixin, DetailView):
+    """
+    Detail view for a specific Place object.
+    """
     model = Place
 
     def dispatch(self, request, *args, **kwargs):
