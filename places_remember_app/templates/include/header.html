@@ -1,0 +1,53 @@
+{% load account %}
+{% load socialaccount %}
+<nav class="navbar navbar-expand-lg bg-body-tertiary">
+  <div class="container-fluid">
+    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+      <li class="nav-item">
+        <a class="navbar-brand" href="{% url 'index' %}">Places Remember</a>
+      </li>
+    </ul>
+    {% if request.user.is_authenticated %}
+      <div class="btn-group dropstart">
+        <img class="avatar rounded-circle dropdown-toggle"
+             role="button" data-bs-toggle="dropdown" aria-expanded="false"
+             width="40px"
+             src="{{ user.socialaccount_set.all.0.get_avatar_url }}" alt="avatar">
+        <ul class="dropdown-menu">
+          <li>
+            <div class="dropdown-item-text">
+              {% user_display user %}
+            </div>
+          </li>
+          <li>
+            <hr class="dropdown-divider">
+          </li>
+          <li>
+            <a class="dropdown-item" href="{% url 'account_logout' %}">
+              Logout
+            </a>
+          </li>
+        </ul>
+      </div>
+    {% else %}
+      <div class="login btn-group dropstart">
+        <button type="button" class="btn btn-secondary" data-bs-toggle="dropdown"
+                aria-expanded="false">
+          Login
+        </button>
+        <ul class="dropdown-menu">
+          <li>
+            <a class="dropdown-item" href="{% provider_login_url 'vk' method='oauth2' popup='noreferrer' %}">
+              Login via VK
+            </a>
+          </li>
+          <li>
+            <a class="dropdown-item" href="{% provider_login_url 'google' method='oauth2' popup='noreferrer' %}">
+              Login via GOOGLE
+            </a>
+          </li>
+        </ul>
+      </div>
+    {% endif %}
+  </div>
+</nav>

@@ -1,55 +1,64 @@
 {% extends 'base.html' %}
-{% load account %}
 {% load static %}
 
 {% block head %}
-  {#  YMaps do not work without referer header  #}
-  <meta name="referrer" content="origin"/>
-  {#  TODO: move api key to .env  #}
-  <script src="https://api-maps.yandex.ru/3.0/?apikey=4ea56e6e-4561-4712-9f69-ece12b9cdd85&lang=ru_RU"></script>
+  {% include 'include/yandex_api.html' %}
   <script src="{% static 'places_remember_app/js/placesList.js' %}"></script>
 {% endblock %}
 
 {% block content %}
-  <div>
-    <img src="{{ user.socialaccount_set.all.0.get_avatar_url }}" alt="avatar">
-  </div>
-  <div>
-    {% user_display user %}
-  </div>
-  <div>
-    <a href="{% url 'account_logout' %}">
-      Logout
-    </a>
-  </div>
-  <div class="add-place-popup">
-    <form action="{% url 'places' %}" method="post" class="add-place-form">
-      {% csrf_token %}
-      {% for field in form %}
-        <div class="form-field add-place-form__item">
-          <div class="form-field__error">
-            {{ field.errors }}
+  <div class="container">
+    <div class="row justify-content-end mb-4">
+      <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addPlaceModal">Add Place</button>
+    </div>
+    <div class="modal" id="addPlaceModal" tabindex="-1">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Add Place</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
-          <div class="form-field__input">{{ field }}</div>
+          <div class="modal-body">
+            <div class="add-place-popup">
+              <form action="{% url 'places' %}" method="post" class="add-place-form">
+                {% csrf_token %}
+                {% for field in form %}
+                  <div class="mb-3 form-field add-place-form__item">
+                    {% if not field.is_hidden %}
+                      <div class="form-field__error">
+                        {{ field.errors }}
+                      </div>
+                      <div class="form-field__label">
+                        {{ field.label_tag }}
+                      </div>
+                    {% endif %}
+                    <div class="form-field__input">{{ field }}</div>
+                  </div>
+                {% endfor %}
+                <div class="mb-3" id="map" style="width: 100%; height: 400px"></div>
+                <button type="submit" class="btn btn-primary">Save</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+              </form>
+            </div>
+          </div>
         </div>
-      {% endfor %}
-      <input type="submit">
-    </form>
-  </div>
-  <div id="map" style="width: 600px; height: 400px"></div>
-  <div class="places">
-    {% for place in places %}
-      <div class="place places__item">
-        <a href="{% url 'places_detail' place.id %}">
-          <div class="place__title">
-            {{ place.title }}
-          </div>
-          <div class="place__description">
-            {{ place.description }}
-          </div>
-        </a>
       </div>
-    {% endfor %}
+    </div>
+    <div class="row">
+      {% for place in places %}
+        <div class="col-md-4 mb-3">
+          <div class="card">
+            <div class="card-body">
+              <a href="{% url 'places_detail' place.id %}" class="card-link">
+                <h5 class="card-title">{{ place.title }}</h5>
+                <p class="card-text">{{ place.description }}</p>
+              </a>
+            </div>
+          </div>
+        </div>
+      {% empty %}
+        <h5>You don't have any places yet.</h5>
+      {% endfor %}
+    </div>
   </div>
 {% endblock %}
-

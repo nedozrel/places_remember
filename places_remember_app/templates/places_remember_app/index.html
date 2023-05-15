@@ -2,16 +2,15 @@
 {% load socialaccount %}
 
 {% block content %}
-  <div class="main">
-    <div>
-      <a href="{% provider_login_url 'vk' %}">
-        Login via VK
-      </a>
-    </div>
-    <div>
-      <a href="{% provider_login_url 'google' %}">
-        Login via GOOGLE
-      </a>
+  <div class="container">
+    <div class="row mt-5">
+      <div class="col-lg-12">
+        <h1>Краткое описание сервиса</h1>
+        <p>Остается мало времени поэтому держите текст рыбу, а я пойду докерфайлик опишу Lorem ipsum dolor sit amet,
+          consectetur adipisicing elit. Accusantium adipisci aut consectetur delectus deserunt dignissimos illo
+          inventore libero natus nulla, odio provident quam quidem tempora temporibus, velit veritatis vero
+          voluptas?</p>
+      </div>
     </div>
   </div>
 {% endblock %}
