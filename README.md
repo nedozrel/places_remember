@@ -20,17 +20,17 @@ git clone https://github.com/nedozrel/places_remember.git
 cd places_remember/
 ```
 
-3. Install dependencies.
-
-```bash
-pip install -r requirements.txt
-```
-
-4. Create a virtual environment for the project (optional).
+3. Create a virtual environment for the project (optional).
 
 ```bash
 virtualenv env
 source env/bin/activate
+```
+
+4. Install dependencies.
+
+```bash
+pip install -r requirements.txt
 ```
 
 5. Move to the Django project directory.
