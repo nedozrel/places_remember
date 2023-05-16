@@ -81,10 +81,10 @@ git clone https://github.com/nedozrel/places_remember.git
 cd places_remember/
 ```
 
-3. Create a copy of the sample environment file named `.env`.
+3. Create a copy of the example environment file named `.env.example`.
 
 ```bash
-cp .env.sample .env
+cp .env.example .env
 ```
 
 4. In the `.env` file, fill in the environmental variables with the necessary values.
